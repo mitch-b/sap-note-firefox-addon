@@ -1,0 +1,10 @@
+{
+  "name": "sapsearch-addon",
+  "title": "SAP Support Note QuickLaunch",
+  "icon": "data/icon_48.png",
+  "id": "jid1-bcZFgFi8AXsqjw",
+  "description": "Quickly launch SAP Support to view or search for notes",
+  "author": "Mitchell Barry",
+  "license": "Apache 2.0",
+  "version": "1.0"
+}
