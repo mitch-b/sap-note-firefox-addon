@@ -1,12 +1,17 @@
 var txtSearch = document.getElementById("txtSearch");
-txtSearch.addEventListener('keyup', function onkeyup(event) {
+
+function onkeyup(event) {
     if (event.keyCode == 13) {
         text = txtSearch.value.trim();
         self.port.emit("search", text);
         txtSearch.value = '';
+        txtSearch.removeEventListener('keyup', onkeyup, false);
     }
-}, false);
+}
 
-self.port.on("show", function onShow() {
+function onShow() {
     txtSearch.focus();
-});
+    txtSearch.addEventListener('keyup', onkeyup, false);
+}
+
+self.port.on("show", onShow);
