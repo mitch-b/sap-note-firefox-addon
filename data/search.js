@@ -1,17 +1,34 @@
-var txtSearch = document.getElementById("txtSearch");
+var note_url = "https://launchpad.support.sap.com/#/notes/";
+var search_url = "https://launchpad.support.sap.com/#/solutions/notes/?q=";
 
-function onkeyup(event) {
-    if (event.keyCode == 13) {
-        text = txtSearch.value.trim();
-        self.port.emit("search", text);
-        txtSearch.value = '';
-        txtSearch.removeEventListener('keyup', onkeyup, false);
-    }
+var searchButton = document.getElementById('btnSearch');
+var noteInput = document.getElementById("note");
+
+function handleSearch() {
+  var userInput = noteInput.value;
+  if (isNaN(userInput))
+    search(userInput);
+  else
+    openNote(userInput);
 }
 
-function onShow() {
-    txtSearch.focus();
-    txtSearch.addEventListener('keyup', onkeyup, false);
+function openNote(noteNumber) {
+  var note = note_url + noteNumber;
+  browser.tabs.create({
+      url: note
+  });
 }
 
-self.port.on("show", onShow);
+function search(searchText) {
+  var terms = encodeURIComponent(searchText);
+  browser.tabs.create({
+      url: search_url + terms
+  });
+}
+
+noteInput.addEventListener("keypress", function(event) {
+  if (event.keyCode == 13) handleSearch();
+});
+
+searchButton.onclick = handleSearch;
+noteInput.focus();
